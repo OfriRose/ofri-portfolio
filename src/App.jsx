@@ -102,10 +102,16 @@ const Portfolio = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-300 font-sans selection:bg-teal-500 selection:text-white overflow-x-hidden">
+    <div className="relative min-h-screen text-slate-300 font-sans selection:bg-teal-500 selection:text-white overflow-x-hidden">
+      {/* Dynamic Background */}
+      <div className="fixed inset-0 -z-10 h-full w-full bg-slate-950">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+        <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-teal-500 opacity-20 blur-[100px]"></div>
+        <div className="absolute right-0 bottom-0 -z-10 h-[400px] w-[400px] rounded-full bg-blue-600 opacity-10 blur-[120px]"></div>
+      </div>
 
       {/* Navigation */}
-      <nav className="fixed w-full z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+      <nav className="fixed w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex-shrink-0 cursor-pointer" onClick={() => scrollTo('home')}>
@@ -165,9 +171,7 @@ const Portfolio = () => {
 
       {/* Hero Section - Redesigned & Rewritten */}
       <section id="home" className="relative pt-32 pb-20 md:pt-40 md:pb-28 px-4 max-w-6xl mx-auto flex flex-col items-center justify-center min-h-[85vh] text-center">
-        {/* Subtle Grid Background */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none -z-10"></div>
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-slate-900 to-transparent pointer-events-none -z-10"></div>
+
 
         {/* Status Badge */}
         <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-8 text-xs font-semibold tracking-wider text-teal-300 uppercase bg-teal-500/10 rounded-full border border-teal-500/20">
@@ -204,7 +208,7 @@ const Portfolio = () => {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="py-20 bg-slate-900 border-t border-slate-800/50">
+      <section id="skills" className="py-20 relative z-10">
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
             <div>
@@ -332,7 +336,7 @@ const Portfolio = () => {
       </section>
 
       {/* Education */}
-      <section id="education" className="py-24 bg-slate-900">
+      <section id="education" className="py-24 relative z-10">
         <div className="max-w-4xl mx-auto px-4">
           <div className="text-center mb-16">
             <div className="inline-flex items-center justify-center p-3 bg-teal-500/10 rounded-full mb-4">
