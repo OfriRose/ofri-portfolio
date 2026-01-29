@@ -172,6 +172,15 @@ const Portfolio = () => {
       {/* Hero Section - Redesigned & Rewritten */}
       <section id="home" className="relative pt-32 pb-20 md:pt-40 md:pb-28 px-4 max-w-6xl mx-auto flex flex-col items-center justify-center min-h-[85vh] text-center">
 
+        {/* Profile Image */}
+        <div className="mb-8 relative group">
+          <div className="absolute -inset-1 bg-gradient-to-r from-teal-500 to-blue-600 rounded-full blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+          <img
+            src="/profile.jpg"
+            alt="Ofri Rozner"
+            className="relative w-52 h-52 rounded-full object-cover object-[60%_20%] border-4 border-slate-900 shadow-2xl"
+          />
+        </div>
 
         {/* Status Badge */}
         <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-8 text-xs font-semibold tracking-wider text-teal-300 uppercase bg-teal-500/10 rounded-full border border-teal-500/20">
