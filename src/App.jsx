@@ -46,7 +46,7 @@ const Portfolio = () => {
   const skills = {
     languages: ["Python", "R", "SQL", "MATLAB", "C", "Bash/Linux"],
     ml: ["XGBoost", "CatBoost", "Scikit-Learn", "Pandas", "SHAP", "Optuna", "Neural Networks"],
-    tools: ["Tableau", "Streamlit", "Git", "Google Gemini API", "Excel"],
+    tools: ["Tableau", "Streamlit", "Git", "LangChain", "Excel"],
     domains: ["Predictive Modeling", "Algorithmic Trading", "Behavioral Analysis", "Fraud Detection"]
   };
 
