@@ -1,415 +1,155 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
-  Github,
-  Linkedin,
-  Mail,
-  FileText,
-  Brain,
-  Database,
-  Code,
-  BarChart,
-  ExternalLink,
-  Menu,
-  X,
-  ChevronDown,
-  Sparkles,
-  PlayCircle,
-  ArrowRight
+  ArrowRight, BarChart, Brain, BriefcaseBusiness, ChevronDown, Code, Database,
+  Download, ExternalLink, Github, Linkedin, Mail, MapPin, Menu,
+  PlayCircle, Sparkles, X,
 } from 'lucide-react';
 
-const Portfolio = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+const resumePath = '/Ofri_Rozner_Resume.pdf';
 
-  // Navigation scroll handler
-  const scrollTo = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsMenuOpen(false);
-      setActiveSection(id);
-    }
-  };
-
-  // Content Data
-  const personalInfo = {
-    name: "Ofri Rozner",
-    title: "Data Scientist | B.Sc. Cognitive Neuroscience",
-    location: "Tel Aviv, Israel",
-    email: "ofri.rozner@gmail.com",
-    phone: "050-743-3539",
-    github: "https://github.com/OfriRose",
-    linkedin: "https://www.linkedin.com/in/ofri-rozner/",
-    summary: "Leveraging a background in Cognitive Neuroscience to build predictive models that understand behavior, not just numbers. I specialize in translating high-dimensional datasets into actionable logic, with a focus on fraud detection and algorithmic decision-making."
-  };
-
-  const skills = {
-    languages: ["Python", "R", "SQL", "MATLAB", "C", "Bash/Linux"],
-    ml: ["XGBoost", "CatBoost", "Scikit-Learn", "Pandas", "SHAP", "Optuna", "Neural Networks"],
-    tools: ["Tableau", "Streamlit", "Git", "LangChain", "Excel"],
-    domains: ["Predictive Modeling", "Algorithmic Trading", "Behavioral Analysis", "Fraud Detection"]
-  };
-
-  const projects = [
-    {
-      title: "Fraud Detection System",
-      tech: ["Python", "XGBoost", "SHAP"],
-      description: "Architected an ML pipeline for a 2M+ transaction dataset with severe class imbalance (0.54%). Engineered behavioral features and implemented a 5-model consensus feature selection.",
-      metrics: "Achieved 97.7% Recall and 0.9977 AUC on unseen test set.",
-      icon: <Database className="w-6 h-6 text-teal-400" />,
-      link: "https://github.com/OfriRose/Fraud_Detection"
-    },
-    {
-      title: "Autonomous AI Crypto Trading Agent",
-      tech: ["Python", "CatBoost", "Tech Analysis"],
-      description: "Engineered a self-correcting algorithmic trading system using an ensemble of ML models. Built a real-time pipeline processing 90+ indicators with a 'Smart Consensus' engine.",
-      metrics: "Filtered out 96% of low-confidence signals, optimizing entry points.",
-      icon: <BarChart className="w-6 h-6 text-teal-400" />,
-      link: "https://github.com/ayalkh/Crypto-Trading-AI/tree/presentation-ready"
-    },
-    {
-      title: "Optimized Random Forest Regressor",
-      tech: ["Scikit-Learn", "Target Encoding"],
-      description: "Developed an end-to-end pipeline to predict equipment prices using a large-scale dataset (400k+ samples). Implemented cross-validated target encoding to minimize memory usage.",
-      metrics: "Maximized accuracy while optimizing computational efficiency.",
-      icon: <Code className="w-6 h-6 text-teal-400" />,
-      link: "https://github.com/OfriRose" // Kept profile link as fallback since no specific repo provided
-    },
-    {
-      title: "AI Weather Advisor Agent",
-      tech: ["LangChain", "Gemini API", "Google Maps"],
-      description: "Built an autonomous agent providing personalized weather insights and real-time transport optimization based on user location and preferences.",
-      metrics: "Live Demo deployed.",
-      icon: <Brain className="w-6 h-6 text-teal-400" />,
-      link: "https://github.com/OfriRose/AIWeatherAdvisor",
-      demo: "https://aiweatheradvisor.streamlit.app/"
-    }
-  ];
-
-  const education = [
-    {
-      school: "Bar-Ilan University",
-      degree: "Certified Data Scientist",
-      details: "Specialization in Generative AI, Deep Learning, SQL, and Neural Networks.",
-      year: "2025 – 2026"
-    },
-    {
-      school: "Ben-Gurion University",
-      degree: "B.Sc. Cognitive Neuroscience & B.A. Psychology",
-      details: "Focus on Computational Modeling, Neural Data Analysis, and Multivariate Statistics.",
-      year: "2018 – 2022"
-    }
-  ];
-
-  return (
-    <div className="relative min-h-screen text-slate-300 font-sans selection:bg-teal-500 selection:text-white overflow-x-hidden">
-      {/* Dynamic Background */}
-      <div className="fixed inset-0 -z-10 h-full w-full bg-slate-950">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-        <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-teal-500 opacity-20 blur-[100px]"></div>
-        <div className="absolute right-0 bottom-0 -z-10 h-[400px] w-[400px] rounded-full bg-blue-600 opacity-10 blur-[120px]"></div>
-      </div>
-
-      {/* Navigation */}
-      <nav className="fixed w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex-shrink-0 cursor-pointer" onClick={() => scrollTo('home')}>
-              <span className="text-xl font-bold text-teal-400">Ofri<span className="text-slate-100">Rozner</span></span>
-            </div>
-
-            {/* Desktop Menu */}
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-8">
-                {['Home', 'Skills', 'Projects', 'Education', 'Contact'].map((item) => (
-                  <button
-                    key={item}
-                    onClick={() => scrollTo(item.toLowerCase())}
-                    className="hover:text-teal-400 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                  >
-                    {item}
-                  </button>
-                ))}
-                <a
-                  href="/Ofri Rozner CV.docx"
-                  className="bg-teal-500 hover:bg-teal-600 text-slate-900 px-4 py-2 rounded-md text-sm font-bold transition-colors flex items-center gap-2"
-                >
-                  <FileText size={16} /> Resume
-                </a>
-              </div>
-            </div>
-
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-slate-300 hover:text-white p-2"
-              >
-                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-slate-800 border-b border-slate-700">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              {['Home', 'Skills', 'Projects', 'Education', 'Contact'].map((item) => (
-                <button
-                  key={item}
-                  onClick={() => scrollTo(item.toLowerCase())}
-                  className="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium w-full text-left"
-                >
-                  {item}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-      </nav>
-
-      {/* Hero Section - Redesigned & Rewritten */}
-      <section id="home" className="relative pt-32 pb-20 md:pt-40 md:pb-28 px-4 max-w-6xl mx-auto flex flex-col items-center justify-center min-h-[85vh] text-center">
-
-        {/* Profile Image */}
-        <div className="mb-8 relative group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-teal-500 to-blue-600 rounded-full blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
-          <img
-            src="/profile.jpg"
-            alt="Ofri Rozner"
-            className="relative w-52 h-52 rounded-full object-cover object-[60%_20%] border-4 border-slate-900 shadow-2xl"
-          />
-        </div>
-
-        {/* Status Badge */}
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-8 text-xs font-semibold tracking-wider text-teal-300 uppercase bg-teal-500/10 rounded-full border border-teal-500/20">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-500"></span>
-          </span>
-          Open to Opportunities
-        </div>
-
-        {/* Main Headlines */}
-        <h1 className="text-4xl md:text-6xl font-bold text-slate-100 mb-6 tracking-tight leading-tight">
-          Cognitive-Driven <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500">Data Science</span>
-        </h1>
-
-        <p className="text-lg md:text-xl text-slate-400 max-w-2xl mb-10 leading-relaxed mx-auto">
-          {personalInfo.summary}
-        </p>
-
-        {/* CTAs */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-          <a href={personalInfo.linkedin} target="_blank" rel="noreferrer" className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3 bg-teal-500 hover:bg-teal-400 text-slate-900 rounded-lg font-bold transition-all hover:shadow-lg hover:shadow-teal-500/20 transform hover:-translate-y-1">
-            <Linkedin size={20} /> LinkedIn
-          </a>
-          <button onClick={() => scrollTo('projects')} className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-medium border border-slate-700 transition-all hover:-translate-y-1">
-            View Projects <ArrowRight size={18} />
-          </button>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce hidden md:block text-slate-600">
-          <ChevronDown size={28} />
-        </div>
-      </section>
-
-      {/* Skills Section */}
-      <section id="skills" className="py-20 relative z-10">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
-            <div>
-              <h2 className="text-3xl font-bold text-slate-100 mb-2">Technical Arsenal</h2>
-              <div className="h-1 w-20 bg-teal-500 rounded"></div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Languages */}
-            <div className="bg-slate-800/30 p-8 rounded-2xl border border-slate-700/50 hover:border-teal-500/50 transition-all hover:bg-slate-800/50 group">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-slate-800 rounded-lg group-hover:bg-teal-500/10 group-hover:text-teal-400 transition-colors">
-                  <Code size={24} />
-                </div>
-                <h3 className="text-xl font-bold text-slate-200">Languages</h3>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {skills.languages.map(skill => (
-                  <span key={skill} className="px-3 py-1.5 bg-slate-900 text-teal-300 text-sm font-medium rounded-md border border-slate-700">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* ML Stack */}
-            <div className="bg-slate-800/30 p-8 rounded-2xl border border-slate-700/50 hover:border-teal-500/50 transition-all hover:bg-slate-800/50 group">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-slate-800 rounded-lg group-hover:bg-teal-500/10 group-hover:text-teal-400 transition-colors">
-                  <Brain size={24} />
-                </div>
-                <h3 className="text-xl font-bold text-slate-200">Machine Learning</h3>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {skills.ml.map(skill => (
-                  <span key={skill} className="px-3 py-1.5 bg-slate-900 text-teal-300 text-sm font-medium rounded-md border border-slate-700">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Tools */}
-            <div className="bg-slate-800/30 p-8 rounded-2xl border border-slate-700/50 hover:border-teal-500/50 transition-all hover:bg-slate-800/50 group">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-slate-800 rounded-lg group-hover:bg-teal-500/10 group-hover:text-teal-400 transition-colors">
-                  <BarChart size={24} />
-                </div>
-                <h3 className="text-xl font-bold text-slate-200">Deployment & Tools</h3>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {skills.tools.map(skill => (
-                  <span key={skill} className="px-3 py-1.5 bg-slate-900 text-teal-300 text-sm font-medium rounded-md border border-slate-700">
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Projects Section - Updated Links */}
-      <section id="projects" className="py-24 bg-slate-800/20">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="mb-16 text-center">
-            <h2 className="text-4xl font-bold text-slate-100 mb-4">Featured Projects</h2>
-            <div className="h-1 w-20 bg-teal-500 rounded mx-auto mb-6"></div>
-            <p className="text-slate-400 max-w-2xl mx-auto">
-              Real-world applications of predictive modeling and data analysis. <br />
-              Check GitHub for the source code or try the live demos.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projects.map((project, index) => (
-              <div key={index} className="group bg-slate-900 rounded-2xl border border-slate-700 overflow-hidden hover:shadow-2xl hover:shadow-teal-500/10 transition-all duration-300 flex flex-col hover:-translate-y-1">
-                <div className="p-8 flex-1">
-                  <div className="flex justify-between items-start mb-6">
-                    <div className="p-3 bg-slate-800 rounded-xl group-hover:bg-teal-500 group-hover:text-slate-900 transition-all duration-300">
-                      {project.icon}
-                    </div>
-
-                    <div className="flex gap-2">
-                      {project.demo && (
-                        <a href={project.demo} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-teal-400 hover:text-teal-300 bg-teal-400/10 hover:bg-teal-400/20 px-3 py-1.5 rounded-full text-xs font-bold transition-all">
-                          <PlayCircle size={14} /> Live Demo
-                        </a>
-                      )}
-                      <a href={project.link} target="_blank" rel="noreferrer" className="text-slate-500 hover:text-white transition-colors p-2 hover:bg-slate-800 rounded-full" title="View Code">
-                        <Github size={20} />
-                      </a>
-                    </div>
-                  </div>
-
-                  <h3 className="text-2xl font-bold text-slate-100 mb-3 group-hover:text-teal-400 transition-colors">
-                    {project.title}
-                  </h3>
-
-                  <p className="text-slate-400 mb-8 leading-relaxed">
-                    {project.description}
-                  </p>
-
-                  <div className="p-4 bg-gradient-to-r from-slate-800 to-slate-800/50 rounded-xl border border-slate-700/50">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Sparkles size={14} className="text-teal-400" />
-                      <span className="text-teal-400 text-xs font-bold uppercase tracking-wider">Key Result</span>
-                    </div>
-                    <span className="text-slate-200 font-medium">{project.metrics}</span>
-                  </div>
-                </div>
-
-                <div className="px-8 py-5 bg-slate-950/30 border-t border-slate-800 flex flex-wrap gap-2">
-                  {project.tech.map((t) => (
-                    <span key={t} className="px-2 py-1 bg-slate-800 rounded text-xs font-mono text-slate-400 border border-slate-700">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Education */}
-      <section id="education" className="py-24 relative z-10">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center justify-center p-3 bg-teal-500/10 rounded-full mb-4">
-              <Brain className="text-teal-400" size={32} />
-            </div>
-            <h2 className="text-4xl font-bold text-slate-100 mb-2">Education</h2>
-            <p className="text-slate-400">The academic foundation behind the models.</p>
-          </div>
-
-          <div className="space-y-12">
-            {education.map((edu, index) => (
-              <div key={index} className="relative pl-8 md:pl-0">
-                {/* Timeline line for mobile */}
-                <div className="absolute left-0 top-0 h-full w-0.5 bg-slate-800 md:hidden"></div>
-
-                <div className="flex flex-col md:flex-row md:items-center justify-between p-6 md:p-8 bg-slate-800/40 rounded-2xl border border-slate-700/50 hover:border-teal-500/30 transition-colors">
-                  <div className="mb-4 md:mb-0">
-                    <h3 className="text-2xl font-bold text-slate-100 mb-1">{edu.degree}</h3>
-                    <div className="text-teal-400 font-medium text-lg mb-2">{edu.school}</div>
-                    <p className="text-slate-400">{edu.details}</p>
-                  </div>
-                  <div className="md:text-right flex-shrink-0">
-                    <span className="inline-block px-4 py-2 bg-slate-900 rounded-lg border border-slate-700 text-teal-400 font-mono font-bold">
-                      {edu.year}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Footer / Contact */}
-      <footer id="contact" className="py-12 bg-slate-950 border-t border-slate-800">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-slate-100 mb-6">Let's Connect</h2>
-          <p className="text-slate-400 max-w-xl mx-auto mb-8">
-            I'm currently looking for Data Scientist roles where I can leverage my experience in predictive modeling and behavioral analysis.
-          </p>
-
-          <div className="flex flex-col md:flex-row justify-center items-center gap-6 mb-12">
-            <a href={`mailto:${personalInfo.email}`} className="flex items-center gap-3 text-slate-300 hover:text-teal-400 transition-colors group">
-              <div className="p-3 bg-slate-900 rounded-full border border-slate-800 group-hover:border-teal-500/50 group-hover:bg-teal-500/10 transition-all">
-                <Mail size={20} />
-              </div>
-              <span className="text-lg">{personalInfo.email}</span>
-            </a>
-            <div className="flex items-center gap-3 text-slate-300">
-              <div className="p-3 bg-slate-900 rounded-full border border-slate-800">
-                <Linkedin size={20} />
-              </div>
-              <span className="text-lg">{personalInfo.location}</span>
-            </div>
-          </div>
-
-          <div className="text-slate-600 text-sm">
-            © {new Date().getFullYear()} Ofri Rozner. Built with React & Tailwind.
-          </div>
-        </div>
-      </footer>
-
-    </div>
-  );
+const personalInfo = {
+  location: 'Tel Aviv, Israel',
+  email: 'ofri.rozner@gmail.com',
+  github: 'https://github.com/OfriRose',
+  linkedin: 'https://www.linkedin.com/in/ofri-rozner/',
 };
 
-export default Portfolio;
+const skillGroups = [
+  {
+    title: 'Data & Analytics',
+    icon: BarChart,
+    skills: ['Python', 'SQL', 'PostgreSQL', 'pandas', 'NumPy', 'EDA', 'Statistical Analysis', 'Cohort Analysis', 'Excel', 'Tableau'],
+  },
+  {
+    title: 'Data Engineering & Quality',
+    icon: Database,
+    skills: ['dbt', 'Docker', 'Data Validation', 'Data Quality Testing', 'Data Modeling', 'Leakage Prevention', 'Git', 'Linux', 'Streamlit'],
+  },
+  {
+    title: 'Machine Learning & Evaluation',
+    icon: Brain,
+    skills: ['scikit-learn', 'XGBoost', 'CatBoost', 'Temporal Validation', 'Imbalanced Classification', 'Threshold Analysis', 'SHAP', 'Model Evaluation'],
+  },
+];
+
+const projects = [
+  {
+    title: 'Fraud Detection & Operational Model Evaluation',
+    tech: ['Python', 'pandas', 'XGBoost', 'SHAP', 'Temporal Validation'],
+    description: 'Rebuilt a leakage-safe fraud-detection workflow for more than 2 million transactions. Used chronological train, validation and test splits, strict-past behavioral velocity features, and train-only preprocessing to prevent temporal leakage.',
+    result: 'Achieved a PR-AUC of 0.954 on the chronologically held-out test set. At the validation-locked threshold, the system captured 99.18% of fraud at 18.19% precision while flagging 1.77% of transactions for review.',
+    icon: Database,
+    repository: 'https://github.com/OfriRose/Fraud_Detection',
+  },
+  {
+    title: 'Neuroimaging Cohort Quality Builder',
+    tech: ['SQL', 'PostgreSQL', 'dbt', 'Docker', 'Streamlit', 'Data Quality'],
+    description: 'Built a reproducible PostgreSQL and dbt pipeline for validating and constructing analysis-ready cohorts from 1,112 multi-site ABIDE I participant records. Implemented missing-value normalization, auditable eligibility rules, automated data-quality tests and a site-held-out evaluation split.',
+    result: 'The pipeline confirmed structural readiness while exposing a material analytical limitation: key behavioral measures had 0% coverage in the evaluation cohort, preventing behavioral-enrichment analysis.',
+    note: 'Aggregate-only educational demonstration using de-identified ABIDE I outputs. Not a diagnostic or clinical tool.',
+    icon: Brain,
+    repository: 'https://github.com/OfriRose/neuroimaging-cohort-quality-builder',
+  },
+  {
+    title: 'AI Crypto Trading Data Pipeline — Team Project',
+    tech: ['Python', 'CatBoost', 'XGBoost', 'Time Series', 'Team Project'],
+    description: 'Co-developed a real-time market-data pipeline covering five assets and five timeframes and producing more than 90 technical indicators. Contributed to time-series evaluation, model reporting, confidence-based signal filtering, configuration and testing.',
+    icon: BarChart,
+    repository: 'https://github.com/ayalkh/Crypto-Trading-AI/tree/presentation-ready',
+  },
+  {
+    title: 'LLM-Assisted Weather & Transport Advisor',
+    tech: ['Python', 'Streamlit', 'APIs', 'LangChain', 'Structured Outputs'],
+    description: 'Built a modular application combining weather, forecast and route APIs to provide contextual travel recommendations. Added validated structured outputs, configuration handling and automated tests.',
+    result: 'Deployed an interactive Streamlit demonstration integrating live external data sources.',
+    icon: Code,
+    repository: 'https://github.com/OfriRose/AIWeatherAdvisor',
+  },
+];
+
+const experience = [
+  { role: 'After-school Program Leader', organization: 'IACC', location: 'Tel Aviv', year: '2025–Present', description: 'Lead the daily operation of a structured program serving autistic participants, coordinating staff priorities, documentation, risk management and real-time issue resolution.' },
+  { role: 'Rehabilitation Instructor', organization: 'Chimes Israel', location: 'Tel Aviv', year: '2024–2025', description: 'Delivered individualized rehabilitation and life-skills support for children with developmental disabilities while documenting progress and translating professional plans into daily practice.' },
+  { role: 'Rehabilitation Instructor', organization: 'Slav and Sons Ltd.', location: 'Israel', year: '2020–2022', description: 'Implemented structured intervention plans and maintained accurate documentation for youth with autism spectrum disorder.' },
+  { role: 'Field Medic', organization: 'Israel Defense Forces', location: 'Israel', year: '2013–2016', description: 'Provided medical support and maintained accurate records in high-pressure environments while following strict operational procedures.' },
+];
+
+const education = [
+  { school: 'Bar-Ilan University', degree: 'Data Science Certificate Program', details: 'Coursework in SQL, statistics, machine learning, deep learning, neural networks and generative AI.', year: '2025–2026' },
+  { school: 'Ben-Gurion University', degree: 'B.Sc. Cognitive Neuroscience & B.A. Psychology', details: 'Coursework in computational modeling, neural data analysis and multivariate statistics.', year: '2018–2022' },
+];
+
+const navigation = ['Home', 'Skills', 'Projects', 'Experience', 'Education', 'Contact'];
+const externalProps = { target: '_blank', rel: 'noopener noreferrer' };
+
+function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const scrollTo = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    setIsMenuOpen(false);
+  };
+
+  return (
+    <div className="relative min-h-screen overflow-x-hidden font-sans text-slate-300 selection:bg-teal-500 selection:text-white">
+      <div className="fixed inset-0 -z-10 h-full w-full bg-slate-950" aria-hidden="true">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
+        <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-teal-500 opacity-20 blur-[100px]" />
+        <div className="absolute bottom-0 right-0 -z-10 h-[400px] w-[400px] rounded-full bg-blue-600 opacity-10 blur-[120px]" />
+      </div>
+
+      <nav className="fixed z-50 w-full border-b border-slate-800/50 bg-slate-950/90 backdrop-blur-md" aria-label="Primary navigation">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between">
+            <button onClick={() => scrollTo('home')} className="rounded-md p-2 text-xl font-bold text-teal-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-400" aria-label="Go to home">
+              Ofri<span className="text-slate-100">Rozner</span>
+            </button>
+            <div className="hidden items-center gap-1 md:flex">
+              {navigation.map((item) => <button key={item} onClick={() => scrollTo(item.toLowerCase())} className="rounded-md px-2 py-2 text-sm font-medium transition-colors hover:text-teal-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400 lg:px-3">{item}</button>)}
+              <a href={resumePath} download className="ml-2 flex items-center gap-2 rounded-md bg-teal-500 px-4 py-2 text-sm font-bold text-slate-950 transition-colors hover:bg-teal-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"><Download size={16} /> Resume PDF</a>
+            </div>
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="rounded-md p-2 text-slate-300 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400 md:hidden" aria-expanded={isMenuOpen} aria-controls="mobile-menu" aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}>{isMenuOpen ? <X size={24} /> : <Menu size={24} />}</button>
+          </div>
+        </div>
+        {isMenuOpen && <div id="mobile-menu" className="border-b border-slate-700 bg-slate-900 px-4 pb-4 md:hidden">
+          {navigation.map((item) => <button key={item} onClick={() => scrollTo(item.toLowerCase())} className="block w-full rounded-md px-3 py-2 text-left text-base font-medium text-slate-300 hover:bg-slate-800 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400">{item}</button>)}
+          <a href={resumePath} download className="mt-2 flex items-center gap-2 rounded-md bg-teal-500 px-3 py-2 font-bold text-slate-950"><Download size={16} /> Download Resume (PDF)</a>
+        </div>}
+      </nav>
+
+      <main>
+        <section id="home" className="relative mx-auto flex min-h-[85vh] max-w-6xl scroll-mt-16 flex-col items-center justify-center px-4 pb-20 pt-32 text-center md:pb-28 md:pt-40">
+          <div className="group relative mb-8"><div className="absolute -inset-1 rounded-full bg-gradient-to-r from-teal-500 to-blue-600 opacity-25 blur transition duration-1000 group-hover:opacity-75" /><img src="/profile.jpg" alt="Portrait of Ofri Rozner" className="relative h-52 w-52 rounded-full border-4 border-slate-900 object-cover object-[60%_20%] shadow-2xl" /></div>
+          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-teal-500/20 bg-teal-500/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-teal-300"><span className="h-2 w-2 rounded-full bg-teal-500" />Open to Opportunities</div>
+          <h1 className="mb-6 text-4xl font-bold leading-tight tracking-tight text-slate-100 md:text-6xl">Data Analyst <span className="text-transparent bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text">| Data Science, ML & Data Quality</span></h1>
+          <p className="mx-auto mb-10 max-w-3xl text-lg leading-relaxed text-slate-300 md:text-xl">I build reproducible analytics and machine-learning workflows that turn complex behavioral, transactional and multi-site data into validated, decision-ready insights. My background in Cognitive Neuroscience and Psychology brings an additional perspective to data quality, human behavior and model evaluation.</p>
+          <div className="grid w-full max-w-2xl grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <button onClick={() => scrollTo('projects')} className="flex items-center justify-center gap-2 rounded-lg bg-teal-500 px-5 py-3 font-bold text-slate-950 transition hover:bg-teal-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">View Projects <ArrowRight size={18} /></button>
+            <a href={resumePath} download className="flex items-center justify-center gap-2 rounded-lg border border-slate-700 bg-slate-800 px-5 py-3 font-semibold text-white transition hover:bg-slate-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400"><Download size={18} /> Download Resume</a>
+            <a href={personalInfo.linkedin} {...externalProps} className="flex items-center justify-center gap-2 rounded-lg border border-slate-700 bg-slate-800 px-5 py-3 font-semibold text-white transition hover:bg-slate-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400"><Linkedin size={18} /> LinkedIn</a>
+            <a href={personalInfo.github} {...externalProps} className="flex items-center justify-center gap-2 rounded-lg border border-slate-700 bg-slate-800 px-5 py-3 font-semibold text-white transition hover:bg-slate-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400"><Github size={18} /> GitHub</a>
+          </div>
+          <ChevronDown className="absolute bottom-8 hidden animate-bounce text-slate-600 md:block" size={28} aria-hidden="true" />
+        </section>
+
+        <section id="skills" className="scroll-mt-16 py-20">
+          <div className="mx-auto max-w-6xl px-4"><h2 className="mb-2 text-3xl font-bold text-slate-100">Technical Skills</h2><div className="mb-12 h-1 w-20 rounded bg-teal-500" />
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">{skillGroups.map((group) => { const SkillIcon = group.icon; return <article key={group.title} className="rounded-2xl border border-slate-700/50 bg-slate-800/30 p-8 transition hover:border-teal-500/50"><div className="mb-6 flex items-center gap-3"><div className="rounded-lg bg-slate-800 p-3 text-teal-400"><SkillIcon size={24} /></div><h3 className="text-xl font-bold text-slate-100">{group.title}</h3></div><div className="flex flex-wrap gap-2">{group.skills.map((skill) => <span key={skill} className="rounded-md border border-slate-700 bg-slate-950 px-3 py-1.5 text-sm font-medium text-teal-300">{skill}</span>)}</div></article>; })}</div>
+            <div className="mt-6 flex flex-wrap items-center gap-2 text-sm text-slate-400"><span className="font-semibold text-slate-300">Additional Languages:</span>{['R', 'MATLAB', 'C'].map((skill) => <span key={skill} className="rounded border border-slate-700 bg-slate-900 px-2.5 py-1">{skill}</span>)}</div>
+          </div>
+        </section>
+
+        <section id="projects" className="scroll-mt-16 bg-slate-800/20 py-24"><div className="mx-auto max-w-6xl px-4"><div className="mb-16 text-center"><h2 className="mb-4 text-4xl font-bold text-slate-100">Featured Projects</h2><div className="mx-auto mb-6 h-1 w-20 rounded bg-teal-500" /><p className="mx-auto max-w-2xl text-slate-300">Reproducible analytics, data-quality and machine-learning work focused on reliable evaluation and decision-ready outputs.</p></div>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">{projects.map((project) => { const Icon = project.icon; return <article key={project.title} className="flex flex-col overflow-hidden rounded-2xl border border-slate-700 bg-slate-900 transition hover:-translate-y-1 hover:border-teal-500/40 hover:shadow-2xl hover:shadow-teal-500/10"><div className="flex-1 p-6 sm:p-8"><div className="mb-6 flex items-start justify-between gap-4"><div className="rounded-xl bg-slate-800 p-3 text-teal-400"><Icon size={24} /></div><div className="flex flex-wrap justify-end gap-2">{project.demo && <a href={project.demo} {...externalProps} className="flex items-center gap-1 rounded-full bg-teal-400/10 px-3 py-1.5 text-xs font-bold text-teal-300 transition hover:bg-teal-400/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400"><PlayCircle size={14} /> Live Demo</a>}<a href={project.repository} {...externalProps} className="flex items-center gap-1 rounded-full bg-slate-800 px-3 py-1.5 text-xs font-bold text-slate-200 transition hover:text-teal-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400" aria-label={`View ${project.title} repository`}><Github size={15} /> Repository <ExternalLink size={12} /></a></div></div><h3 className="mb-3 text-2xl font-bold text-slate-100">{project.title}</h3><p className="mb-6 leading-relaxed text-slate-300">{project.description}</p>{project.result && <div className="rounded-xl border border-slate-700/50 bg-slate-800 p-4"><div className="mb-1 flex items-center gap-2"><Sparkles size={14} className="text-teal-400" /><span className="text-xs font-bold uppercase tracking-wider text-teal-300">Key Result</span></div><p className="font-medium text-slate-200">{project.result}</p></div>}{project.note && <p className="mt-4 text-sm italic text-slate-400">{project.note}</p>}</div><div className="flex flex-wrap gap-2 border-t border-slate-800 bg-slate-950/30 px-6 py-5 sm:px-8">{project.tech.map((tag) => <span key={tag} className="rounded border border-slate-700 bg-slate-800 px-2 py-1 font-mono text-xs text-slate-300">{tag}</span>)}</div></article>; })}</div></div></section>
+
+        <section id="experience" className="scroll-mt-16 py-24"><div className="mx-auto max-w-5xl px-4"><div className="mb-14 text-center"><BriefcaseBusiness className="mx-auto mb-4 text-teal-400" size={34} /><h2 className="mb-3 text-4xl font-bold text-slate-100">Experience</h2><p className="mx-auto max-w-2xl text-slate-300">Leadership, structured documentation and operational responsibility across community, rehabilitation and healthcare settings.</p></div><div className="grid gap-5 md:grid-cols-2">{experience.map((item) => <article key={`${item.role}-${item.organization}`} className="rounded-2xl border border-slate-700/50 bg-slate-800/40 p-6"><div className="mb-3 flex flex-col justify-between gap-2 sm:flex-row"><div><h3 className="text-xl font-bold text-slate-100">{item.role}</h3><p className="font-medium text-teal-300">{item.organization} <span className="text-slate-500">|</span> {item.location}</p></div><span className="h-fit whitespace-nowrap rounded-lg border border-slate-700 bg-slate-950 px-3 py-1.5 font-mono text-sm font-bold text-teal-300">{item.year}</span></div><p className="leading-relaxed text-slate-300">{item.description}</p></article>)}</div></div></section>
+
+        <section id="education" className="scroll-mt-16 bg-slate-800/20 py-24"><div className="mx-auto max-w-4xl px-4"><div className="mb-14 text-center"><Brain className="mx-auto mb-4 text-teal-400" size={34} /><h2 className="mb-2 text-4xl font-bold text-slate-100">Education</h2><p className="text-slate-300">Academic training in data science, human behavior and quantitative analysis.</p></div><div className="space-y-6">{education.map((item) => <article key={item.degree} className="flex flex-col justify-between gap-5 rounded-2xl border border-slate-700/50 bg-slate-800/40 p-6 md:flex-row md:items-center md:p-8"><div><h3 className="mb-1 text-2xl font-bold text-slate-100">{item.degree}</h3><p className="mb-2 text-lg font-medium text-teal-300">{item.school}</p><p className="text-slate-300">{item.details}</p></div><span className="h-fit whitespace-nowrap rounded-lg border border-slate-700 bg-slate-950 px-4 py-2 font-mono font-bold text-teal-300">{item.year}</span></article>)}</div></div></section>
+      </main>
+
+      <footer id="contact" className="scroll-mt-16 border-t border-slate-800 bg-slate-950 py-14"><div className="mx-auto max-w-6xl px-4 text-center"><h2 className="mb-6 text-3xl font-bold text-slate-100">Let&apos;s Connect</h2><p className="mx-auto mb-9 max-w-3xl text-slate-300">I&apos;m open to Data Analyst, Data Quality, AI/ML Evaluation and Junior Data Science opportunities where I can combine analytical thinking, reliable data workflows and an understanding of human behavior.</p><div className="mb-10 flex flex-wrap justify-center gap-4"><a href={`mailto:${personalInfo.email}`} className="flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-900 px-4 py-3 text-slate-200 hover:text-teal-300"><Mail size={19} /> {personalInfo.email}</a><a href={personalInfo.linkedin} {...externalProps} className="flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-900 px-4 py-3 text-slate-200 hover:text-teal-300"><Linkedin size={19} /> LinkedIn</a><a href={personalInfo.github} {...externalProps} className="flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-900 px-4 py-3 text-slate-200 hover:text-teal-300"><Github size={19} /> GitHub</a><span className="flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-900 px-4 py-3 text-slate-200"><MapPin size={19} /> {personalInfo.location}</span></div><p className="text-sm text-slate-500">© {new Date().getFullYear()} Ofri Rozner. Built with React &amp; Tailwind.</p></div></footer>
+    </div>
+  );
+}
+
+export default App;
