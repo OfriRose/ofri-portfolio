@@ -49,7 +49,7 @@ const projects = [
     note: 'Aggregate-only educational demonstration using de-identified ABIDE I outputs. Not a diagnostic or clinical tool.',
     icon: Brain,
     repository: 'https://github.com/OfriRose/neuroimaging-cohort-quality-builder',
-    demo: 'https://neuroimaging-cohort-quality.streamlit.app/',
+    demo: 'https://neuroimaging-cohort.streamlit.app/',
   },
   {
     title: 'AI Crypto Trading Data Pipeline — Team Project',
