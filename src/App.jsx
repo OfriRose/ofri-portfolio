@@ -34,6 +34,15 @@ const skillGroups = [
 
 const projects = [
   {
+    title: 'Payment Operations Control Tower',
+    tech: ['Python', 'pandas', 'NumPy', 'Streamlit', 'pytest', 'Poetry'],
+    description: 'Built an interactive payment-operations dashboard for investigating approval-rate drops across providers. The workflow validates and analyzes 50,000 synthetic payment attempts, then presents KPI trends, provider performance, decline causes, operational alerts and an investigation table in Streamlit.',
+    result: 'Identified a CloudPay technical degradation from observable outcomes: approval fell from 90.6% to 71.1%, p95 latency rose from 850 ms to 3,203 ms, and technical declines reached 60.2% while other providers remained broadly stable.',
+    icon: BarChart,
+    repository: 'https://github.com/OfriRose/payment-operation-control-tower',
+    demo: 'https://payment-operation-control-tower.streamlit.app/',
+  },
+  {
     title: 'Fraud Detection & Operational Model Evaluation',
     tech: ['Python', 'pandas', 'XGBoost', 'SHAP', 'Temporal Validation'],
     description: 'Rebuilt a leakage-safe fraud-detection workflow for more than 2 million transactions. Used chronological train, validation and test splits, strict-past behavioral velocity features, and train-only preprocessing to prevent temporal leakage.',
